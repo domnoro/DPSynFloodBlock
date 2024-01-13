@@ -295,9 +295,9 @@ const bit<48> TIMESTAMP_5 =0x7270E00; // 2 min
 //The SYN-ACK threshold corresponds to the limit of acceptable failed connections, after which is considered to be under attack
 //for now this this value is fixed but in future should be adapted to the reality of the network
 
-const bit<48> SYN_ACK_THREADSHOLD = 50;
+const bit<48> SYN_ACK_THRESHOLD = 50;
 
-const bit<48> PORT_SYN_ACK_THREADSHOLD = 30;
+const bit<48> PORT_SYN_ACK_THRESHOLD = 30;
 
 //RTT 
 const bit<48> TIMER_COUNT = 120000000;    //2 min 
@@ -1292,9 +1292,9 @@ control MyIngress(inout headers hdr,
                                 meta.forward_packet=1;
                                 //Check if the SYN-ACK threshold has been reached.
 
-                                if (value_aux_syn - value_aux_ack > (bit<48>)SYN_ACK_THREADSHOLD)  {
+                                if (value_aux_syn - value_aux_ack > (bit<48>)SYN_ACK_THRESHOLD)  {
                                     Alarm_ddos = 1;
-                                    if ((aux_port[47:0] - aux_port[143:96]) > (bit<48>)PORT_SYN_ACK_THREADSHOLD){
+                                    if ((aux_port[47:0] - aux_port[143:96]) > (bit<48>)PORT_SYN_ACK_THRESHOLD){
                                         meta.alarm =1;
                                     }                                    
                                 }                            
@@ -1772,9 +1772,9 @@ control MyIngress(inout headers hdr,
                                         
                                         if (meta.tcphand_ack==1) {  
                                             host_3hand_reg.read(aux_port, (bit<32>)meta.host_port);
-                                            if (value_aux_syn - value_aux_ack > (bit<48>)SYN_ACK_THREADSHOLD)  {
+                                            if (value_aux_syn - value_aux_ack > (bit<48>)SYN_ACK_THRESHOLD)  {
                                                 Alarm_ddos = 1;
-                                                if ((aux_port[47:0] - aux_port[143:96]) > (bit<48>)PORT_SYN_ACK_THREADSHOLD){
+                                                if ((aux_port[47:0] - aux_port[143:96]) > (bit<48>)PORT_SYN_ACK_THRESHOLD){
                                                     meta.alarm =1;
                                                 }                                                    
                                             }
